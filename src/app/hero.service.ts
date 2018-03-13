@@ -10,6 +10,10 @@ import { Hero } from './hero';
 /* Services */
 import { MessageService } from './message.service';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 @Injectable()
 export class HeroService {
 
@@ -40,6 +44,23 @@ export class HeroService {
       tap(_ => this.log(`fetched hero id=${id}`)),
       catchError(this.handleError<Hero>(`getHero id=${id}`))
     );
+  }
+
+  updateHero(hero: Hero): Observable<any> {
+    return this.http.put(this.heroesUrl, hero, httpOptions)
+      .pipe(
+        tap(_ => this.log(`Update hero id=${hero.id}`)),
+        catchError(this.handleError<any>('updateError'))
+      );
+  }
+
+  addHero(hero: Hero): Observable<Hero> {
+    return this.http.post<Hero>(this.heroesUrl, hero, httpOptions)
+      .pipe(
+        // tslint:disable-next-line:no-shadowed-variable
+        tap((hero: Hero) => this.log(`Added hero w/ id=${hero.id}`)),
+        catchError(this.handleError<Hero>('addHero'))
+      );
   }
 
   /**
