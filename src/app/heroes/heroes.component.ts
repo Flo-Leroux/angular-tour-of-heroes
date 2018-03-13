@@ -6,6 +6,9 @@ import { Hero } from '../hero';
 /* Add Datas */
 import { HEROES } from '../mock-heroes';
 
+/* Services */
+import { HeroService } from '../hero.service';
+
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
@@ -18,16 +21,21 @@ export class HeroesComponent implements OnInit {
     name: 'Windstorm'
   };
 
-  heroes: Hero[] = HEROES;
+  heroes: Hero[];
 
   selectedHero: Hero;
 
-  constructor() { }
+  constructor(private heroService: HeroService) { }
 
   ngOnInit() {
+    this.getHeroes();
   }
 
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
+  }
+
+  getHeroes(): void {
+    this.heroes = this.heroService.getHeroes();
   }
 }
