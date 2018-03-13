@@ -3,9 +3,6 @@ import { Component, OnInit } from '@angular/core';
 /* Add Class */
 import { Hero } from '../hero';
 
-/* Add Datas */
-import { HEROES } from '../mock-heroes';
-
 /* Services */
 import { HeroService } from '../hero.service';
 
